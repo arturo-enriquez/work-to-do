@@ -2,12 +2,12 @@ package models;
 
 import java.util.ArrayList;
 
-public class strMaterialsForWork {
+public class strToolForWork {
     
     private int id;
     private ArrayList<Integer> list = new ArrayList<>();
 
-    public strMaterialsForWork(int id, ArrayList<Integer> list) {
+    public strToolForWork(int id, ArrayList<Integer> list) {
         this.id = id;
         this.list = list;
     }
@@ -18,6 +18,13 @@ public class strMaterialsForWork {
     
     public ArrayList<Integer> getList() {
         return list;
+    }
+    public String getListString() {
+        String string="";
+        for (int x : list) {
+            string += x + ",";
+        }
+        return string;
     }
     public void setList(ArrayList<Integer> list) {
         this.list = list;

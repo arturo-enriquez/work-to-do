@@ -5,20 +5,19 @@ import exceptions.expEmptyString;
 import exceptions.expIdNotExist;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import models.strCity;
+import models.strMaterialForWork;
 
-public class City {
+public class MaterialForWork {
     // Config
     private String fileName = this.getClass().getSimpleName();
     private String path = Config.getStoragePath()+this.fileName+".dat";
     
     private int nextId;
-    private ArrayList<strCity> list = new ArrayList<strCity>();
+    private ArrayList<strMaterialForWork> list = new ArrayList<strMaterialForWork>();
     
     // Get next ID
     public int getNextId(){
@@ -32,7 +31,7 @@ public class City {
         FileReader file = new FileReader(path);
         BufferedReader b = new BufferedReader(file);
         String line;
-        strCity obj;
+        strMaterialForWork obj;
         String[] ARR;
         list.clear();
         this.nextId = 0;
@@ -40,10 +39,14 @@ public class City {
         
         while ((line = b.readLine()) != null) {
             ARR = line.split("\\|");
-            obj = new strCity(
+            String[] listId = ARR[1].toString().split(",");
+            ArrayList<Integer> intListId = new ArrayList<Integer>();
+            for (String x : listId) {
+                intListId.add(Integer.parseInt(x));
+            }
+            obj = new strMaterialForWork(
                     Integer.parseInt(ARR[0].toString()),
-                    ARR[1].toString(),
-                    Integer.parseInt(ARR[2].toString())
+                    intListId
             );
             lastId = Integer.parseInt(ARR[0].toString());
             nextId = (lastId> nextId) ? lastId : nextId;
@@ -54,11 +57,10 @@ public class City {
     // Save to file
     public void saveToFile() throws IOException {
         FileWriter fw = new FileWriter(path);
-        for (strCity x : list) {
+        for (strMaterialForWork x : list) {
             fw.write(
-                    x.getId() + "|"+
-                    x.getName() +"|"+
-                    x.getIdState()
+                    x.getId() +"|"+
+                    x.getListString()
             );
             fw.write("\n");
         }
@@ -67,15 +69,13 @@ public class City {
     
     // =============== CRUD ==================
     
-    public ArrayList<strCity> getList() {
+    public ArrayList<strMaterialForWork> getList() {
         return list;
     }
     
     public int indexId(int id) {
-        strCity[] arr = null;
-        list.toArray(arr);
         int i = 0;
-        for (strCity x : arr) {
+        for (strMaterialForWork x : list) {
             if (x.getId() == id) return i;
             i++;
         }
@@ -87,20 +87,20 @@ public class City {
     }
     
     // Create
-    public void create(strCity data) {
+    public void create(strMaterialForWork data) {
         if (data == null) throw new RuntimeException("Null Object");
          
         else list.add(data);
     }
     // Read
-    public strCity searchId(int id){
-        for (strCity x : list){
+    public strMaterialForWork searchId(int id){
+        for (strMaterialForWork x : list){
             if (x.getId() == id) return x;
         }
         return null; 
     }
     // Update
-    public void update(strCity data) throws expIdNotExist {
+    public void update(strMaterialForWork data) throws expIdNotExist {
         if (!exitsId(nextId)) throw new expIdNotExist();
         
         int index = indexId(data.getId());

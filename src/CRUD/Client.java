@@ -1,8 +1,10 @@
 package CRUD;
 
+import config.Config;
 import exceptions.expEmptyString;
 import exceptions.expIdNotExist;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,9 +12,9 @@ import java.util.ArrayList;
 import models.strClient;
 
 public class Client {
-  // Config
+    // Config
     private String fileName = this.getClass().getSimpleName();
-    private String path = "C:\\DB_NAME\\"+this.fileName+".dat";
+    private String path = Config.getStoragePath()+this.fileName+".dat";
     
     private int nextId;
     private ArrayList<strClient> list = new ArrayList<strClient>();
@@ -25,9 +27,10 @@ public class Client {
     
     // Load data from the file
     public void LoadFromFile() throws IOException, expEmptyString {
-        String line;
+        if (!(new File(path).exists())) return;
         FileReader file = new FileReader(path);
         BufferedReader b = new BufferedReader(file);
+        String line;
         strClient obj;
         String[] ARR;
         list.clear();
@@ -116,4 +119,3 @@ public class Client {
     }
     
 }
-

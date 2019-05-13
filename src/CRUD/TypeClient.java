@@ -5,20 +5,19 @@ import exceptions.expEmptyString;
 import exceptions.expIdNotExist;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import models.strCity;
+import models.strTypeClient;
 
-public class City {
+public class TypeClient {
     // Config
     private String fileName = this.getClass().getSimpleName();
     private String path = Config.getStoragePath()+this.fileName+".dat";
     
     private int nextId;
-    private ArrayList<strCity> list = new ArrayList<strCity>();
+    private ArrayList<strTypeClient> list = new ArrayList<strTypeClient>();
     
     // Get next ID
     public int getNextId(){
@@ -32,7 +31,7 @@ public class City {
         FileReader file = new FileReader(path);
         BufferedReader b = new BufferedReader(file);
         String line;
-        strCity obj;
+        strTypeClient obj;
         String[] ARR;
         list.clear();
         this.nextId = 0;
@@ -40,10 +39,9 @@ public class City {
         
         while ((line = b.readLine()) != null) {
             ARR = line.split("\\|");
-            obj = new strCity(
+            obj = new strTypeClient(
                     Integer.parseInt(ARR[0].toString()),
-                    ARR[1].toString(),
-                    Integer.parseInt(ARR[2].toString())
+                    ARR[1].toString()
             );
             lastId = Integer.parseInt(ARR[0].toString());
             nextId = (lastId> nextId) ? lastId : nextId;
@@ -54,11 +52,10 @@ public class City {
     // Save to file
     public void saveToFile() throws IOException {
         FileWriter fw = new FileWriter(path);
-        for (strCity x : list) {
+        for (strTypeClient x : list) {
             fw.write(
                     x.getId() + "|"+
-                    x.getName() +"|"+
-                    x.getIdState()
+                    x.getDescription()
             );
             fw.write("\n");
         }
@@ -67,15 +64,13 @@ public class City {
     
     // =============== CRUD ==================
     
-    public ArrayList<strCity> getList() {
+    public ArrayList<strTypeClient> getList() {
         return list;
     }
     
     public int indexId(int id) {
-        strCity[] arr = null;
-        list.toArray(arr);
         int i = 0;
-        for (strCity x : arr) {
+        for (strTypeClient x : list) {
             if (x.getId() == id) return i;
             i++;
         }
@@ -87,20 +82,20 @@ public class City {
     }
     
     // Create
-    public void create(strCity data) {
+    public void create(strTypeClient data) {
         if (data == null) throw new RuntimeException("Null Object");
          
         else list.add(data);
     }
     // Read
-    public strCity searchId(int id){
-        for (strCity x : list){
+    public strTypeClient searchId(int id){
+        for (strTypeClient x : list){
             if (x.getId() == id) return x;
         }
         return null; 
     }
     // Update
-    public void update(strCity data) throws expIdNotExist {
+    public void update(strTypeClient data) throws expIdNotExist {
         if (!exitsId(nextId)) throw new expIdNotExist();
         
         int index = indexId(data.getId());

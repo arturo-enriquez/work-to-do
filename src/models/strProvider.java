@@ -32,6 +32,13 @@ public class strProvider {
     public ArrayList<Integer> getIdTypeProvider() {
         return idTypeProvider;
     }
+    public String getIdTypeProviderString() {
+        String string="";
+        for (int x : idTypeProvider) {
+            string += x + ",";
+        }
+        return string;
+    }
     public void setIdTypeProvider(ArrayList<Integer> idTypeProvider) {
         this.idTypeProvider = idTypeProvider;
     }
