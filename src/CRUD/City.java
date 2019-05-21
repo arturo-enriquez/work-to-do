@@ -72,10 +72,8 @@ public class City {
     }
     
     public int indexId(int id) {
-        strCity[] arr = null;
-        list.toArray(arr);
         int i = 0;
-        for (strCity x : arr) {
+        for (strCity x : list) {
             if (x.getId() == id) return i;
             i++;
         }
@@ -109,6 +107,8 @@ public class City {
     // Delete
     public void delete(int id) throws expIdNotExist {
         if (!exitsId(nextId)) throw new expIdNotExist();
+        int index = indexId(id);
+        list.remove(index);
     }
     
 }

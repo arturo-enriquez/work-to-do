@@ -79,10 +79,8 @@ public class Worker {
     }
     
     public int indexId(int id) {
-        strWorker[] arr = null;
-        list.toArray(arr);
         int i = 0;
-        for (strWorker x : arr) {
+        for (strWorker x : list) {
             if (x.getId() == id) return i;
             i++;
         }
@@ -116,6 +114,8 @@ public class Worker {
     // Delete
     public void delete(int id) throws expIdNotExist {
         if (!exitsId(nextId)) throw new expIdNotExist();
+        int index = indexId(id);
+        list.remove(index);
     }
     
 }

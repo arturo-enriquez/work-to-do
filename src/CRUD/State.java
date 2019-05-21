@@ -71,10 +71,8 @@ public class State {
     }
     
     public int indexId(int id) {
-        strState[] arr = null;
-        list.toArray(arr);
         int i = 0;
-        for (strState x : arr) {
+        for (strState x : list) {
             if (x.getId() == id) return i;
             i++;
         }
@@ -108,6 +106,8 @@ public class State {
     // Delete
     public void delete(int id) throws expIdNotExist {
         if (!exitsId(nextId)) throw new expIdNotExist();
+        int index = indexId(id);
+        list.remove(index);
     }
     
 }

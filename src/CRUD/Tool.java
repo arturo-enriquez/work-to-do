@@ -74,10 +74,8 @@ public class Tool {
     }
     
     public int indexId(int id) {
-        strTool[] arr = null;
-        list.toArray(arr);
         int i = 0;
-        for (strTool x : arr) {
+        for (strTool x : list) {
             if (x.getId() == id) return i;
             i++;
         }
@@ -111,6 +109,8 @@ public class Tool {
     // Delete
     public void delete(int id) throws expIdNotExist {
         if (!exitsId(nextId)) throw new expIdNotExist();
+        int index = indexId(id);
+        list.remove(index);
     }
     
 }

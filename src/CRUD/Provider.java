@@ -82,10 +82,8 @@ public class Provider {
     }
     
     public int indexId(int id) {
-        strProvider[] arr = null;
-        list.toArray(arr);
         int i = 0;
-        for (strProvider x : arr) {
+        for (strProvider x : list) {
             if (x.getId() == id) return i;
             i++;
         }
@@ -119,6 +117,8 @@ public class Provider {
     // Delete
     public void delete(int id) throws expIdNotExist {
         if (!exitsId(nextId)) throw new expIdNotExist();
+        int index = indexId(id);
+        list.remove(index);
     }
     
 }

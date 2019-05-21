@@ -75,10 +75,8 @@ public class Location {
     }
     
     public int indexId(int id) {
-        strLocation[] arr = null;
-        list.toArray(arr);
         int i = 0;
-        for (strLocation x : arr) {
+        for (strLocation x : list) {
             if (x.getId() == id) return i;
             i++;
         }
@@ -112,6 +110,8 @@ public class Location {
     // Delete
     public void delete(int id) throws expIdNotExist {
         if (!exitsId(nextId)) throw new expIdNotExist();
+        int index = indexId(id);
+        list.remove(index);
     }
     
 }
